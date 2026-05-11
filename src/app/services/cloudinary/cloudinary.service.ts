@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { API_BASE_URL } from '../../core/config/api-url';
 
 interface UploadResponse {
   success: boolean;
@@ -24,7 +25,7 @@ interface SignatureResponse {
   providedIn: 'root',
 })
 export class CloudinaryService {
-  private readonly apiUrl = 'http://localhost:3000';
+  private readonly apiUrl = API_BASE_URL;
   private readonly cloudName = 'dfhwoz7bq'; // Cambia esto por tu Cloud Name
   private readonly uploadPreset = 'wonder'; // Cambia esto por tu preset
 

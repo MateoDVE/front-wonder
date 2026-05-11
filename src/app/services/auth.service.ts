@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE_URL } from '../core/config/api-url';
 
 interface AuthUser {
   id: number;
@@ -18,7 +19,7 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = API_BASE_URL;
   private readonly USER_KEY = 'wonder_auth_user';
 
   constructor(private http: HttpClient) {}
