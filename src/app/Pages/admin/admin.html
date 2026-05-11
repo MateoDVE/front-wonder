@@ -1,0 +1,141 @@
+<section class="admin-shell">
+  <aside class="admin-shell__sidebar">
+    <div class="admin-brand">
+      <p class="admin-brand__eyebrow">Administration</p>
+      <h1>Inventory Management</h1>
+      <p>Controla productos, stock y estado desde un panel limpio y rápido.</p>
+    </div>
+
+    <a class="admin-cta" (click)="openCreateProductModal()">
+      <span>+</span>
+      Add New Product
+    </a>
+
+    <div class="admin-stats-mini">
+      <div class="admin-stats-mini__card">
+        <span>Total Products</span>
+        <strong>{{ totalProducts() }}</strong>
+      </div>
+      <div class="admin-stats-mini__card">
+        <span>Total Stock</span>
+        <strong>{{ totalStock() }}</strong>
+      </div>
+      <div class="admin-stats-mini__card">
+        <span>Active Products</span>
+        <strong>{{ activeProducts() }}</strong>
+      </div>
+      <div class="admin-stats-mini__card admin-stats-mini__card--warn">
+        <span>Low Stock</span>
+        <strong>{{ lowStockProducts() }}</strong>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-shell__main">
+    <header class="admin-toolbar">
+      <label class="admin-search" for="admin-search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          id="admin-search"
+          type="search"
+          placeholder="Search products, brands or categories..."
+          [value]="searchTerm()"
+          (input)="onSearch($event)"
+        />
+      </label>
+
+      <div class="admin-filters" role="group" aria-label="Admin filters">
+        <button type="button" [class.is-active]="selectedState() === 'all'" (click)="setState('all')">All</button>
+        <button type="button" [class.is-active]="selectedState() === 'active'" (click)="setState('active')">Active</button>
+        <button type="button" [class.is-active]="selectedState() === 'lowStock'" (click)="setState('lowStock')">Low Stock</button>
+        <button type="button" [class.is-active]="selectedState() === 'inactive'" (click)="setState('inactive')">Inactive</button>
+      </div>
+    </header>
+
+    @if (error()) {
+      <div class="admin-alert">{{ error() }}</div>
+    }
+
+    <section class="admin-summary">
+      <article class="summary-card">
+        <span class="summary-card__label">Catalog status</span>
+        <strong>{{ activeProducts() }}/{{ totalProducts() }}</strong>
+        <small>products active</small>
+      </article>
+      <article class="summary-card summary-card--accent">
+        <span class="summary-card__label">Available stock</span>
+        <strong>{{ totalStock() }}</strong>
+        <small>units ready to sell</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-card__label">Categories</span>
+        <strong>{{ categorias().length }}</strong>
+        <small>organized collections</small>
+      </article>
+    </section>
+
+    @if (loading()) {
+      <div class="admin-grid admin-grid--skeleton">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="admin-card admin-card--skeleton"></div>
+        }
+      </div>
+    } @else {
+      @if (filteredProducts().length > 0) {
+        <div class="admin-grid">
+          @for (product of filteredProducts(); track product.id) {
+            <article class="admin-card">
+              <div class="admin-card__image-wrap">
+                @if (product.imagen_url) {
+                  <img [src]="product.imagen_url" [alt]="product.nombre" />
+                } @else {
+                  <div class="admin-card__fallback">{{ product.nombre }}</div>
+                }
+                <span class="admin-chip">{{ product.categoria?.nombre ?? product.tipo_bebida ?? 'Licor' }}</span>
+              </div>
+
+              <div class="admin-card__body">
+                <div class="admin-card__heading">
+                  <div>
+                    <h3>{{ product.nombre }}</h3>
+                    <p>{{ product.marca ?? 'No brand' }}</p>
+                  </div>
+                  <span class="admin-status admin-status--{{ getStockTone(product) }}">{{ getStockLabel(product) }}</span>
+                </div>
+
+                <div class="admin-card__meta">
+                  <div>
+                    <span>Price</span>
+                    <strong>{{ product.precio_venta | currency }}</strong>
+                  </div>
+                  <div>
+                    <span>Stock</span>
+                    <strong>{{ product.stock }}</strong>
+                  </div>
+                </div>
+
+                <div class="admin-card__actions">
+                  <button type="button" class="admin-btn admin-btn--primary" (click)="editProduct(product)">Edit</button>
+                  <button type="button" class="admin-btn admin-btn--danger" (click)="deleteProduct(product)">Delete</button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="admin-empty">
+          <h3>No products match your search</h3>
+          <p>Try a different term or clear the filters.</p>
+          <button type="button" (click)="searchTerm.set(''); setState('all')">Reset view</button>
+        </div>
+      }
+    }
+  </div>
+</section>
+
+<!-- Modals -->
+<app-product-modal></app-product-modal>
+<app-category-modal></app-category-modal>

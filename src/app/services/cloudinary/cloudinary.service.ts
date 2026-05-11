@@ -25,7 +25,7 @@ interface SignatureResponse {
 })
 export class CloudinaryService {
   private readonly apiUrl = 'http://localhost:3000';
-  private readonly cloudName = 'Wonder'; // Cambia esto por tu Cloud Name
+  private readonly cloudName = 'dfhwoz7bq'; // Cambia esto por tu Cloud Name
   private readonly uploadPreset = 'wonder'; // Cambia esto por tu preset
 
   constructor(private http: HttpClient) {}

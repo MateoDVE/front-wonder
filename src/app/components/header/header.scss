@@ -235,4 +235,31 @@
       transform: none;
     }
   }
+
+  &__user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 12px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--clr-border);
+    background: var(--clr-surface);
+    color: var(--clr-text-1);
+    font-weight: 700;
+    font-size: 13px;
+
+    small {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 8px;
+      border-radius: var(--radius-pill);
+      background: var(--clr-surface-2);
+      color: var(--clr-text-2);
+      font-size: 11px;
+      text-transform: lowercase;
+      font-weight: 700;
+    }
+  }
 }
