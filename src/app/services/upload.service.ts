@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { API_BASE_URL } from '../core/config/api-url';
 
 export interface UploadResponse {
   success: boolean;
@@ -18,7 +18,7 @@ export interface UploadResponse {
 @Injectable({ providedIn: 'root' })
 export class UploadService {
   private readonly http = inject(HttpClient);
-  private readonly base = `${environment.apiUrl}/uploads`;
+  private readonly base = `${API_BASE_URL}/uploads`;
 
   async uploadImage(file: File, type: 'producto' | 'categoria' | 'usuario' | 'otro'): Promise<UploadResponse> {
     const formData = new FormData();

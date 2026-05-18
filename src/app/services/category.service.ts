@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { API_BASE_URL } from '../core/config/api-url';
 import { Categoria } from '../types/database.types';
 import { AuthService } from './auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 export class CategoryService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
-  private readonly base = `${environment.apiUrl}/categorias`;
+  private readonly base = `${API_BASE_URL}/categorias`;
 
   readonly categorias = signal<Categoria[]>([]);
   readonly loading = signal(false);

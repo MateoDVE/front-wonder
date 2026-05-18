@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { API_BASE_URL } from '../core/config/api-url';
 import { Producto } from '../types/database.types';
 import { AuthService } from './auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 export class ProductService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
-  private readonly base = `${environment.apiUrl}/productos`;
+  private readonly base = `${API_BASE_URL}/productos`;
 
   readonly productos = signal<Producto[]>([]);
   readonly loading = signal(false);

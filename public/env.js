@@ -1,1 +1,1 @@
-window.__env = { API_URL: 'http://localhost:3000' };
+window.__env = { API_URL: 'https://back-wonder.vercel.app' };

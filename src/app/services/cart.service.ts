@@ -2,7 +2,7 @@ import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { BackendCarritoItem, CartItem, Producto } from '../types/database.types';
-import { environment } from '../../environments/environment';
+import { API_BASE_URL } from '../core/config/api-url';
 import { UserService } from './user.service';
 
 export interface AgregarItemCarritoDto {
@@ -15,7 +15,7 @@ export interface AgregarItemCarritoDto {
 export class CartService {
   private readonly http = inject(HttpClient);
   private readonly userService = inject(UserService);
-  private readonly base = `${environment.apiUrl}/carrito`;
+  private readonly base = `${API_BASE_URL}/carrito`;
 
   readonly items = signal<CartItem[]>([]);
   readonly isOpen = signal(false);

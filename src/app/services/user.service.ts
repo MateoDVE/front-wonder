@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { API_BASE_URL } from '../core/config/api-url';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -30,7 +30,7 @@ export class UserService {
 
   private async verificarUsuario(id: string): Promise<boolean> {
     try {
-      const res = await fetch(`${environment.apiUrl}/usuarios/${id}/existe`);
+      const res = await fetch(`${API_BASE_URL}/usuarios/${id}/existe`);
       const data = await res.json();
       return data.existe === true;
     } catch {
@@ -41,7 +41,7 @@ export class UserService {
   private async createGuestUser(): Promise<void> {
     if (typeof localStorage === 'undefined') return;
     try {
-      const res = await fetch(`${environment.apiUrl}/usuarios/invitado`, {
+      const res = await fetch(`${API_BASE_URL}/usuarios/invitado`, {
         method: 'POST',
       });
       const data = await res.json();
