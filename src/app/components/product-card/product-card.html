@@ -30,7 +30,7 @@
     <div class="product-card__meta">
       <span class="product-card__price">{{ product.precio_venta | currency:undefined:'Bs. ' }}</span>
       <span class="product-card__stock" [class.product-card__stock--out]="!inStock">
-        {{ product.stock }} in stock
+        {{ product.stock }} disponibles
       </span>
     </div>
 
@@ -44,7 +44,7 @@
         <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
       </svg>
-      {{ inStock ? 'Add to Cart' : 'Out of Stock' }}
+      {{ inStock ? 'Agregar al Carrito' : 'Agotado' }}
     </button>
   </div>
 </article>

@@ -214,16 +214,98 @@
       flex: 1;
     }
 
-    &:hover {
-      border-color: var(--clr-primary);
-      color: var(--clr-primary-dark);
-      transform: translateY(-0.5px);
+      &:hover {
+        border-color: var(--clr-primary);
+        color: var(--clr-primary-dark);
+        transform: translateY(-0.5px);
 
-      :root.dark & {
-        color: var(--clr-primary-light);
+        :root.dark & {
+          color: var(--clr-primary-light);
+        }
+      }
+
+      &--active {
+        border-color: var(--clr-primary-dark);
+        background: var(--clr-accent);
+        color: var(--clr-primary-dark);
+
+        :root.dark & {
+          color: var(--clr-primary-light);
+          border-color: var(--clr-primary-light);
+        }
       }
     }
-  }
+
+    // ─── Filter Panel ──────────────────────────────────────────────────────────
+    &__filter-panel {
+      background: var(--clr-surface);
+      border: 1.5px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-sm);
+      animation: slideDown 200ms ease-out forwards;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+    &__filter-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    &__filter-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--clr-text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    &__filter-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    &__filter-opt {
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--clr-border);
+      background: var(--clr-surface-2);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--clr-text-2);
+      transition: all 0.2s var(--ease);
+
+      &:hover {
+        border-color: var(--clr-primary);
+        color: var(--clr-primary-dark);
+        
+        :root.dark & {
+          color: var(--clr-primary-light);
+        }
+      }
+
+      &--active {
+        border-color: var(--clr-primary-dark) !important;
+        background: var(--btn-gradient);
+        color: #fff !important;
+        box-shadow: var(--shadow-xs);
+
+        :root.dark & {
+          border-color: var(--clr-primary-light) !important;
+        }
+      }
+    }
 
   // ─── Category chips ────────────────────────────────────────────────────────
   &__categories {

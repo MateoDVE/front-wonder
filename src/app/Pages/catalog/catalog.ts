@@ -30,15 +30,44 @@ export class CatalogPage implements OnInit {
   readonly searchTerm = signal('');
   readonly activeCategory = signal('');
   readonly addingToCart = signal(false);
+  readonly showFilters = signal(false);
+  readonly sortBy = signal<'name' | 'priceAsc' | 'priceDesc'>('name');
 
   readonly filteredProducts = computed(() => {
     let list = this.productService.filterByTerm(this.searchTerm());
+    
+    // 1. Filter by category
     const cat = this.activeCategory();
     if (cat) {
-      list = list.filter(p => p.categoria_id?.toString() === cat || p.categoria?.nombre === cat);
+      const categoryObj = this.categorias().find(c => c.nombre === cat);
+      const catId = categoryObj?.id;
+      if (catId) {
+        list = list.filter(p => p.categoria_id === catId || p.categoria?.nombre === cat);
+      } else {
+        list = list.filter(p => p.categoria?.nombre === cat);
+      }
     }
+
+    // 2. Sort results
+    const sort = this.sortBy();
+    if (sort === 'name') {
+      list = [...list].sort((a, b) => a.nombre.localeCompare(b.nombre));
+    } else if (sort === 'priceAsc') {
+      list = [...list].sort((a, b) => a.precio_venta - b.precio_venta);
+    } else if (sort === 'priceDesc') {
+      list = [...list].sort((a, b) => b.precio_venta - a.precio_venta);
+    }
+
     return list;
   });
+
+  toggleFilters(): void {
+    this.showFilters.update(v => !v);
+  }
+
+  setSort(sort: 'name' | 'priceAsc' | 'priceDesc'): void {
+    this.sortBy.set(sort);
+  }
 
   ngOnInit(): void {
     this.productService.loadAll();

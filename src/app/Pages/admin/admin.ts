@@ -33,13 +33,19 @@ export class AdminPage implements OnInit {
     const term = this.searchTerm().toLowerCase().trim();
     const state = this.selectedState();
 
+    // Resolve category IDs matching the search term
+    const matchedCategoryIds = this.categorias()
+      .filter(c => c.nombre.toLowerCase().includes(term))
+      .map(c => c.id);
+
     return this.productos().filter((product) => {
       const matchesTerm = !term || [
         product.nombre,
         product.marca ?? '',
         product.tipo_bebida ?? '',
         product.categoria?.nombre ?? '',
-      ].some((value) => value.toLowerCase().includes(term));
+      ].some((value) => value.toLowerCase().includes(term)) ||
+      (product.categoria_id && matchedCategoryIds.includes(product.categoria_id));
 
       const lowStock = product.stock <= (product.stock_minimo ?? 5);
       const matchesState =
@@ -79,9 +85,9 @@ export class AdminPage implements OnInit {
   }
 
   getStockLabel(product: Producto): string {
-    if (!product.activo) return 'Inactive';
-    if (product.stock <= (product.stock_minimo ?? 5)) return 'Low stock';
-    return 'In stock';
+    if (!product.activo) return 'Inactivo';
+    if (product.stock <= (product.stock_minimo ?? 5)) return 'Stock bajo';
+    return 'En stock';
   }
 
   // Product CRUD handlers
