@@ -18,6 +18,14 @@ export class ProductCardComponent {
     return this.product.categoria?.nombre ?? this.product.tipo_bebida ?? 'Licor';
   }
 
+  get cleanedImageUrl(): string | null {
+    const url = this.product.imagen_url;
+    if (!url) return null;
+    const lower = url.trim().toLowerCase();
+    if (lower === 'null' || lower === 'undefined' || lower === '') return null;
+    return url;
+  }
+
   get inStock(): boolean {
     return this.product.stock > 0;
   }

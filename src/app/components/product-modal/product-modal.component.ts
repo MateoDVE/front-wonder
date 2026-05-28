@@ -501,6 +501,13 @@ export class ProductModalComponent implements OnInit {
     });
   }
 
+  private cleanUrl(url: string | null | undefined): string | null {
+    if (!url) return null;
+    const lower = url.trim().toLowerCase();
+    if (lower === 'null' || lower === 'undefined' || lower === '') return null;
+    return url;
+  }
+
   open(product?: Producto): void {
     this.error.set(null);
     this.uploadError.set(null);
@@ -508,7 +515,8 @@ export class ProductModalComponent implements OnInit {
     
     if (product) {
       this.editingProduct.set(product);
-      this.imagePreview.set(product.imagen_url || null);
+      const sanitizedUrl = this.cleanUrl(product.imagen_url);
+      this.imagePreview.set(sanitizedUrl);
       this.form.patchValue({
         nombre: product.nombre,
         precio_venta: product.precio_venta,
@@ -518,7 +526,7 @@ export class ProductModalComponent implements OnInit {
         marca: product.marca,
         activo: product.activo,
         destacado: product.destacado,
-        imagen_url: product.imagen_url || '',
+        imagen_url: sanitizedUrl || '',
       });
     } else {
       this.editingProduct.set(null);
