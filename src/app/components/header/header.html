@@ -2,14 +2,14 @@
   <div class="header__container">
     <!-- Left: logo + nav -->
     <div class="header__left">
-      <a class="header__logo" href="/" aria-label="Wonder home">
+      <a class="header__logo" routerLink="/" aria-label="Wonder home">
         <img class="header__logo-icon" src="/Image (Wonder Logo).png" alt="Wonder logo" aria-hidden="true" />
         <span class="header__logo-text">Wonder</span>
       </a>
       <nav class="header__nav" aria-label="Main navigation">
-        <a class="header__nav-link" href="/">Catalog</a>
+        <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">Catalog</a>
         @if (isAdmin()) {
-          <a class="header__nav-link" routerLink="/admin">Admin</a>
+          <a class="header__nav-link" routerLink="/admin" routerLinkActive="header__nav-link--active">Admin</a>
         }
       </nav>
     </div>

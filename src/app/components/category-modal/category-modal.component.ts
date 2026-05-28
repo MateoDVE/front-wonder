@@ -114,54 +114,69 @@ import { Categoria } from '../../types/database.types';
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      animation: fadeIn 200ms ease-out;
     }
 
     .modal-content {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
+      background: var(--clr-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--clr-border);
+      padding: 2.5rem;
       width: 90%;
-      max-width: 500px;
-      max-height: 90vh;
+      max-width: 520px;
+      max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-modal);
+      animation: popIn 250ms cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .modal-header h2 {
       margin: 0;
-      font-size: 1.5rem;
-      color: #333;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--clr-text-1);
     }
 
     .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
+      background: var(--clr-surface-2);
+      border: 1px solid var(--clr-border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.2rem;
       cursor: pointer;
-      color: #999;
-      transition: color 0.2s;
+      color: var(--clr-text-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
 
     .close-btn:hover {
-      color: #333;
+      background: var(--clr-border);
+      color: var(--clr-text-1);
+      transform: scale(1.05);
     }
 
     .category-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
     .image-section {
@@ -176,25 +191,25 @@ import { Categoria } from '../../types/database.types';
 
     .image-preview {
       width: 100%;
-      height: 200px;
-      border: 2px dashed #ddd;
-      border-radius: 8px;
+      height: 180px;
+      border: 2px dashed var(--clr-border);
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      background: #fafafa;
+      background: var(--clr-surface-2);
       transition: all 0.2s;
       overflow: hidden;
     }
 
     .image-preview:hover {
-      border-color: #66CC00;
-      background: #f5fff5;
+      border-color: var(--clr-primary);
+      background: var(--clr-accent);
     }
 
     .image-preview.has-image {
-      border: none;
+      border: 1px solid var(--clr-border);
       background: transparent;
       cursor: pointer;
     }
@@ -203,7 +218,7 @@ import { Categoria } from '../../types/database.types';
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 6px;
+      border-radius: var(--radius-md);
     }
 
     .upload-placeholder {
@@ -211,16 +226,17 @@ import { Categoria } from '../../types/database.types';
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      color: #999;
+      color: var(--clr-text-2);
     }
 
     .upload-placeholder svg {
-      color: #ddd;
+      color: var(--clr-text-3);
     }
 
     .upload-placeholder p {
       margin: 0;
       font-size: 0.875rem;
+      font-weight: 600;
     }
 
     .upload-progress {
@@ -232,9 +248,9 @@ import { Categoria } from '../../types/database.types';
 
     .progress-bar {
       width: 100%;
-      height: 4px;
-      background: #f0f0f0;
-      border-radius: 2px;
+      height: 6px;
+      background: var(--clr-surface-2);
+      border-radius: var(--radius-pill);
       overflow: hidden;
     }
 
@@ -242,7 +258,7 @@ import { Categoria } from '../../types/database.types';
       content: '';
       display: block;
       height: 100%;
-      background: #66CC00;
+      background: var(--clr-primary);
       animation: progress 1.5s ease-in-out infinite;
     }
 
@@ -253,12 +269,14 @@ import { Categoria } from '../../types/database.types';
     }
 
     .upload-error {
-      background: #ffebee;
-      color: #d32f2f;
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+      color: #ef4444;
       padding: 0.5rem;
-      border-radius: 4px;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
       text-align: center;
+      font-weight: 600;
     }
 
     .form-group {
@@ -267,37 +285,44 @@ import { Categoria } from '../../types/database.types';
     }
 
     .form-group label {
-      font-weight: 500;
+      font-weight: 700;
+      font-size: 0.9rem;
       margin-bottom: 0.5rem;
-      color: #333;
+      color: var(--clr-text-1);
     }
 
     .form-group input[type="text"],
     .form-group textarea {
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--clr-border);
+      background: var(--clr-surface);
+      color: var(--clr-text-1);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
       font-family: inherit;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
+      outline: none;
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
-      outline: none;
-      border-color: #66CC00;
-      box-shadow: 0 0 0 3px rgba(102, 204, 0, 0.1);
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 3px var(--clr-accent);
     }
 
     .form-group small {
-      color: #d32f2f;
+      color: #ef4444;
       font-size: 0.75rem;
       margin-top: 0.25rem;
+      font-weight: 500;
     }
 
     .form-group input[type="checkbox"] {
-      margin-right: 0.5rem;
+      margin-right: 0.6rem;
       cursor: pointer;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--clr-primary);
     }
 
     .form-group label {
@@ -314,46 +339,62 @@ import { Categoria } from '../../types/database.types';
     .btn-cancel,
     .btn-submit {
       flex: 1;
-      padding: 0.75rem 1rem;
+      padding: 0.75rem 1.25rem;
       border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 500;
+      border-radius: var(--radius-pill);
+      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
     }
 
     .btn-cancel {
-      background: #f0f0f0;
-      color: #333;
+      background: var(--clr-surface-2);
+      color: var(--clr-text-2);
+      border: 1px solid var(--clr-border);
     }
 
     .btn-cancel:hover {
-      background: #e0e0e0;
+      background: var(--clr-border);
+      color: var(--clr-text-1);
     }
 
     .btn-submit {
-      background: #66CC00;
+      background: var(--btn-gradient);
       color: white;
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-submit:hover:not(:disabled) {
-      background: #55bb00;
-      box-shadow: 0 4px 12px rgba(102, 204, 0, 0.3);
+      opacity: 0.95;
+      transform: translateY(-0.5px);
+      box-shadow: var(--shadow-md);
     }
 
     .btn-submit:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
     .error-message {
-      background: #ffebee;
-      color: #d32f2f;
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+      color: #ef4444;
       padding: 0.75rem;
-      border-radius: 6px;
+      border-radius: var(--radius-md);
       font-size: 0.875rem;
-      margin-top: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.97) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
   `]
 })

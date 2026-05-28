@@ -78,7 +78,7 @@ import { UserService } from '../../services/user.service';
       place-items: center;
       padding: 24px;
       background:
-        radial-gradient(circle at top, rgba(102, 204, 0, 0.18), transparent 30%),
+        radial-gradient(circle at top, rgba(55, 198, 9, 0.18), transparent 30%),
         rgba(15, 23, 42, 0.72);
       backdrop-filter: blur(16px);
       animation: fadeIn 180ms ease-out;
@@ -134,7 +134,7 @@ import { UserService } from '../../services/user.service';
     .login-modal__brand {
       padding: 40px 36px;
       background:
-        linear-gradient(135deg, rgba(102, 204, 0, 0.12), rgba(31, 77, 0, 0.08)),
+        linear-gradient(135deg, rgba(55, 198, 9, 0.12), rgba(36, 136, 5, 0.08)),
         var(--clr-surface-2);
       border-right: 1px solid var(--clr-border);
       display: flex;

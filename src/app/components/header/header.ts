@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ThemeService } from '../../services/theme.service';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
@@ -10,7 +10,7 @@ import { UserService } from '../../services/user.service';
   selector: 'app-header',
   templateUrl: './header.html',
   styleUrl: './header.scss',
-  imports: [LoginModalComponent, RouterLink],
+  imports: [LoginModalComponent, RouterLink, RouterLinkActive],
 })
 export class HeaderComponent {
   readonly cart = inject(CartService);
