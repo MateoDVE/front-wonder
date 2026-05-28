@@ -83,7 +83,7 @@
             (click)="onCheckout()"
             [disabled]="isCheckingOut() || cart.items().length === 0"
           >
-            {{ isCheckingOut() ? 'Procesando...' : 'Proceder al Pago' }}
+            {{ isCheckingOut() ? 'Procesando...' : 'Proceder con el Pedido' }}
           </button>
           @if (checkoutError()) {
             <div class="cart-modal__error" role="alert">{{ checkoutError() }}</div>
