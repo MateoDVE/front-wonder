@@ -1,9 +1,9 @@
 <article class="product-card">
   <div class="product-card__img-wrap">
-    @if (!imgError && product.imagen_url) {
+    @if (!imgError && cleanedImageUrl) {
       <img
         class="product-card__img"
-        [src]="product.imagen_url"
+        [src]="cleanedImageUrl"
         [alt]="product.nombre"
         (error)="onImgError()"
         loading="lazy"
