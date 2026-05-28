@@ -4,8 +4,8 @@
     <!-- Hero Banner -->
     <div class="catalog__hero">
       <div class="catalog__hero-content">
-        <span class="catalog__hero-tag">Premium Selection</span>
-        <h1 class="catalog__hero-title">Wonder Store</h1>
+        <span class="catalog__hero-tag">Selección Premium</span>
+        <h1 class="catalog__hero-title">Licorería Wonder</h1>
         <p class="catalog__hero-subtitle">Descubre licores excepcionales, marcas exclusivas y bebidas selectas curadas para ti.</p>
       </div>
     </div>
@@ -20,20 +20,54 @@
           id="search-input"
           class="catalog__search-input"
           type="search"
-          placeholder="Search for liquor, brands, categories..."
+          placeholder="Buscar licores, marcas, categorías..."
           [value]="searchTerm()"
           (input)="onSearch($event)"
           autocomplete="off"
         />
       </label>
 
-      <button class="catalog__filter-btn" type="button">
+      <button 
+        class="catalog__filter-btn" 
+        [class.catalog__filter-btn--active]="showFilters()"
+        (click)="toggleFilters()"
+        type="button"
+      >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
         </svg>
-        Filters
+        Filtros y Orden
       </button>
     </div>
+
+    <!-- Filter / Sort Panel -->
+    @if (showFilters()) {
+      <div class="catalog__filter-panel">
+        <div class="catalog__filter-group">
+          <span class="catalog__filter-label">Ordenar productos:</span>
+          <div class="catalog__filter-actions">
+            <button 
+              class="catalog__filter-opt" 
+              [class.catalog__filter-opt--active]="sortBy() === 'name'"
+              (click)="setSort('name')"
+              type="button"
+            >Alfabético</button>
+            <button 
+              class="catalog__filter-opt" 
+              [class.catalog__filter-opt--active]="sortBy() === 'priceAsc'"
+              (click)="setSort('priceAsc')"
+              type="button"
+            >Precio: Menor a Mayor</button>
+            <button 
+              class="catalog__filter-opt" 
+              [class.catalog__filter-opt--active]="sortBy() === 'priceDesc'"
+              (click)="setSort('priceDesc')"
+              type="button"
+            >Precio: Mayor a Menor</button>
+          </div>
+        </div>
+      </div>
+    }
 
     <!-- Category chips -->
     @if (!loading() && categorias().length > 0) {
@@ -43,7 +77,7 @@
           [class.catalog__cat-chip--active]="activeCategory() === ''"
           (click)="onCategoryToggle('')"
           type="button"
-        >All</button>
+        >Todos</button>
         @for (cat of categoriasNames(); track cat) {
           <button
             class="catalog__cat-chip"
@@ -95,7 +129,7 @@
           </svg>
           <p>No se encontraron productos para <strong>"{{ searchTerm() }}"</strong></p>
           <button class="catalog__empty-reset" (click)="searchTerm.set(''); activeCategory.set('')" type="button">
-            Clear search
+            Limpiar búsqueda
           </button>
         </div>
       } @else {

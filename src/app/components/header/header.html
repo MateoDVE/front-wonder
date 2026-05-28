@@ -6,8 +6,8 @@
         <img class="header__logo-icon" src="/Image (Wonder Logo).png" alt="Wonder logo" aria-hidden="true" />
         <span class="header__logo-text">Wonder</span>
       </a>
-      <nav class="header__nav" aria-label="Main navigation">
-        <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">Catalog</a>
+      <nav class="header__nav" aria-label="Navegación principal">
+        <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">Catálogo</a>
         @if (isAdmin()) {
           <a class="header__nav-link" routerLink="/admin" routerLinkActive="header__nav-link--active">Admin</a>
         }
@@ -48,7 +48,7 @@
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
         @if (cart.itemCount() > 0) {
-          <span class="header__cart-badge" aria-label="{{ cart.itemCount() }} items">
+          <span class="header__cart-badge" [attr.aria-label]="cart.itemCount() + ' artículos'">
             {{ cart.itemCount() }}
           </span>
         }
@@ -61,7 +61,7 @@
             <polyline points="10 17 15 12 10 7"/>
             <line x1="15" y1="12" x2="3" y2="12"/>
           </svg>
-          Login
+          Iniciar Sesión
         </button>
       } @else {
         <span class="header__user-pill">

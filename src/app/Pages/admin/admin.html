@@ -1,31 +1,31 @@
 <section class="admin-shell">
   <aside class="admin-shell__sidebar">
     <div class="admin-brand">
-      <p class="admin-brand__eyebrow">Administration</p>
-      <h1>Inventory Management</h1>
+      <p class="admin-brand__eyebrow">Administración</p>
+      <h1>Gestión de Inventario</h1>
       <p>Controla productos, stock y estado desde un panel limpio y rápido.</p>
     </div>
 
     <a class="admin-cta" (click)="openCreateProductModal()">
       <span>+</span>
-      Add New Product
+      Agregar Producto
     </a>
 
     <div class="admin-stats-mini">
       <div class="admin-stats-mini__card">
-        <span>Total Products</span>
+        <span>Productos Totales</span>
         <strong>{{ totalProducts() }}</strong>
       </div>
       <div class="admin-stats-mini__card">
-        <span>Total Stock</span>
+        <span>Stock Total</span>
         <strong>{{ totalStock() }}</strong>
       </div>
       <div class="admin-stats-mini__card">
-        <span>Active Products</span>
+        <span>Productos Activos</span>
         <strong>{{ activeProducts() }}</strong>
       </div>
       <div class="admin-stats-mini__card admin-stats-mini__card--warn">
-        <span>Low Stock</span>
+        <span>Stock Bajo</span>
         <strong>{{ lowStockProducts() }}</strong>
       </div>
     </div>
@@ -41,17 +41,17 @@
         <input
           id="admin-search"
           type="search"
-          placeholder="Search products, brands or categories..."
+          placeholder="Buscar productos, marcas o categorías..."
           [value]="searchTerm()"
           (input)="onSearch($event)"
         />
       </label>
 
-      <div class="admin-filters" role="group" aria-label="Admin filters">
-        <button type="button" [class.is-active]="selectedState() === 'all'" (click)="setState('all')">All</button>
-        <button type="button" [class.is-active]="selectedState() === 'active'" (click)="setState('active')">Active</button>
-        <button type="button" [class.is-active]="selectedState() === 'lowStock'" (click)="setState('lowStock')">Low Stock</button>
-        <button type="button" [class.is-active]="selectedState() === 'inactive'" (click)="setState('inactive')">Inactive</button>
+      <div class="admin-filters" role="group" aria-label="Filtros de administración">
+        <button type="button" [class.is-active]="selectedState() === 'all'" (click)="setState('all')">Todos</button>
+        <button type="button" [class.is-active]="selectedState() === 'active'" (click)="setState('active')">Activos</button>
+        <button type="button" [class.is-active]="selectedState() === 'lowStock'" (click)="setState('lowStock')">Stock Bajo</button>
+        <button type="button" [class.is-active]="selectedState() === 'inactive'" (click)="setState('inactive')">Inactivos</button>
       </div>
     </header>
 
@@ -61,19 +61,19 @@
 
     <section class="admin-summary">
       <article class="summary-card">
-        <span class="summary-card__label">Catalog status</span>
+        <span class="summary-card__label">Estado del catálogo</span>
         <strong>{{ activeProducts() }}/{{ totalProducts() }}</strong>
-        <small>products active</small>
+        <small>productos activos</small>
       </article>
       <article class="summary-card summary-card--accent">
-        <span class="summary-card__label">Available stock</span>
+        <span class="summary-card__label">Stock disponible</span>
         <strong>{{ totalStock() }}</strong>
-        <small>units ready to sell</small>
+        <small>unidades listas para la venta</small>
       </article>
       <article class="summary-card">
-        <span class="summary-card__label">Categories</span>
+        <span class="summary-card__label">Categorías</span>
         <strong>{{ categorias().length }}</strong>
-        <small>organized collections</small>
+        <small>colecciones organizadas</small>
       </article>
     </section>
 
@@ -101,14 +101,14 @@
                 <div class="admin-card__heading">
                   <div>
                     <h3>{{ product.nombre }}</h3>
-                    <p>{{ product.marca ?? 'No brand' }}</p>
+                    <p>{{ product.marca ?? 'Sin marca' }}</p>
                   </div>
                   <span class="admin-status admin-status--{{ getStockTone(product) }}">{{ getStockLabel(product) }}</span>
                 </div>
 
                 <div class="admin-card__meta">
                   <div>
-                    <span>Price</span>
+                    <span>Precio</span>
                     <strong>{{ product.precio_venta | currency:undefined:'Bs. ' }}</strong>
                   </div>
                   <div>
@@ -118,8 +118,8 @@
                 </div>
 
                 <div class="admin-card__actions">
-                  <button type="button" class="admin-btn admin-btn--primary" (click)="editProduct(product)">Edit</button>
-                  <button type="button" class="admin-btn admin-btn--danger" (click)="deleteProduct(product)">Delete</button>
+                  <button type="button" class="admin-btn admin-btn--primary" (click)="editProduct(product)">Editar</button>
+                  <button type="button" class="admin-btn admin-btn--danger" (click)="deleteProduct(product)">Eliminar</button>
                 </div>
               </div>
             </article>
@@ -127,9 +127,9 @@
         </div>
       } @else {
         <div class="admin-empty">
-          <h3>No products match your search</h3>
-          <p>Try a different term or clear the filters.</p>
-          <button type="button" (click)="searchTerm.set(''); setState('all')">Reset view</button>
+          <h3>No se encontraron productos coincidentes</h3>
+          <p>Intenta con otro término o limpia los filtros.</p>
+          <button type="button" (click)="searchTerm.set(''); setState('all')">Restablecer vista</button>
         </div>
       }
     }

@@ -1,14 +1,16 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
 import { API_BASE_URL } from '../core/config/api-url';
 import { Producto } from '../types/database.types';
 import { AuthService } from './auth.service';
+import { CategoryService } from './category.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly categoryService = inject(CategoryService);
   private readonly base = `${API_BASE_URL}/productos`;
 
   readonly productos = signal<Producto[]>([]);
@@ -99,12 +101,20 @@ export class ProductService {
   filterByTerm(term: string): Producto[] {
     const t = term.toLowerCase().trim();
     if (!t) return this.productos();
+
+    // Resolve category IDs matching the search term
+    const matchedCategoryIds = this.categoryService
+      .categorias()
+      .filter(c => c.nombre.toLowerCase().includes(t))
+      .map(c => c.id);
+
     return this.productos().filter(
       p =>
         p.nombre.toLowerCase().includes(t) ||
         (p.marca ?? '').toLowerCase().includes(t) ||
         (p.tipo_bebida ?? '').toLowerCase().includes(t) ||
-        (p.categoria?.nombre ?? '').toLowerCase().includes(t),
+        (p.categoria?.nombre ?? '').toLowerCase().includes(t) ||
+        (p.categoria_id && matchedCategoryIds.includes(p.categoria_id)),
     );
   }
 
