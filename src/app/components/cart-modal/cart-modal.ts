@@ -28,6 +28,26 @@ export class CartModalComponent {
     await this.cart.updateQuantity(itemId, cantidad);
   }
 
+  async onInputChange(itemId: number, event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    if (isNaN(value) || value < 1) {
+      // Don't update cart yet if it's empty, user might be typing
+      return;
+    }
+    await this.cart.updateQuantity(itemId, value);
+  }
+
+  async onInputBlur(itemId: number, event: Event, currentQty: number): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    if (isNaN(value) || value < 1) {
+      // Restore valid quantity on blur if left invalid
+      input.value = currentQty.toString();
+      await this.cart.updateQuantity(itemId, currentQty);
+    }
+  }
+
   async onRemoveItem(itemId: number): Promise<void> {
     await this.cart.removeItem(itemId);
   }
