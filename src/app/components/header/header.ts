@@ -20,6 +20,7 @@ export class HeaderComponent {
   private readonly router = inject(Router);
 
   showLoginModal = false;
+  mobileMenuOpen = false;
   currentUser = this.auth.getUser();
 
   isAdmin(): boolean {
@@ -27,7 +28,16 @@ export class HeaderComponent {
     return rol.toLowerCase() === 'admin';
   }
 
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
+  }
+
   openLogin(): void {
+    this.closeMobileMenu();
     if (this.currentUser) {
       if (this.isAdmin()) {
         void this.router.navigateByUrl('/admin');
@@ -44,6 +54,7 @@ export class HeaderComponent {
   onLoginSuccess(user: any): void {
     this.currentUser = user ?? this.auth.getUser();
     this.closeLogin();
+    this.closeMobileMenu();
 
     if (this.isAdmin()) {
       void this.router.navigateByUrl('/admin');
@@ -51,6 +62,7 @@ export class HeaderComponent {
   }
 
   logout(): void {
+    this.closeMobileMenu();
     this.auth.logout();
     this.userService.clearUser();
     this.currentUser = null;

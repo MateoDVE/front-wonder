@@ -396,6 +396,19 @@ import { Categoria } from '../../types/database.types';
       from { opacity: 0; transform: scale(0.97) translateY(8px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
+
+    @media (max-width: 480px) {
+      .modal-content {
+        padding: 1.5rem 1.25rem;
+        border-radius: var(--radius-md);
+      }
+      .modal-header {
+        margin-bottom: 1.5rem;
+      }
+      .form-actions {
+        margin-top: 1.2rem;
+      }
+    }
   `]
 })
 export class CategoryModalComponent implements OnInit {
