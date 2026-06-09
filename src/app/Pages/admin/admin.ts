@@ -58,6 +58,15 @@ export class AdminPage implements OnInit {
     });
   });
 
+  readonly filteredCategories = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    if (!term) return this.categorias();
+    return this.categorias().filter(c =>
+      c.nombre.toLowerCase().includes(term) ||
+      (c.descripcion ?? '').toLowerCase().includes(term)
+    );
+  });
+
   readonly totalProducts = computed(() => this.productos().length);
   readonly totalStock = computed(() => this.productos().reduce((sum, product) => sum + (product.stock ?? 0), 0));
   readonly activeProducts = computed(() => this.productos().filter((product) => product.activo).length);

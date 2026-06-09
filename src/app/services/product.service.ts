@@ -19,6 +19,13 @@ export class ProductService {
 
   private loadSeq = 0;
 
+  private cleanUrl(url: string | null | undefined): string | undefined {
+    if (!url) return undefined;
+    const lower = url.trim().toLowerCase();
+    if (lower === 'null' || lower === 'undefined' || lower === '') return undefined;
+    return url;
+  }
+
   async loadAll(options?: { onlyActive?: boolean }): Promise<void> {
     const seq = ++this.loadSeq;
     this.loading.set(true);
@@ -30,7 +37,13 @@ export class ProductService {
         this.http.get<Producto[]>(this.base, { params }).pipe(timeout(10000)),
       );
       if (seq !== this.loadSeq) return;
-      this.productos.set(data ?? []);
+
+      const enriched = (data ?? []).map(p => ({
+        ...p,
+        imagen_url: this.cleanUrl(p.imagen_url),
+        categoria: p.categoria || this.categoryService.categorias().find(c => c.id === p.categoria_id),
+      }));
+      this.productos.set(enriched);
     } catch (err) {
       if (seq !== this.loadSeq) return;
       this.error.set('No se pudieron cargar los productos.');
@@ -49,14 +62,23 @@ export class ProductService {
   }
 
   async create(producto: Omit<Producto, 'id'>): Promise<Producto> {
+    const payload = {
+      ...producto,
+      imagen_url: this.cleanUrl(producto.imagen_url),
+    };
     try {
       const result = await firstValueFrom(
-        this.http.post<Producto>(this.base, producto, {
+        this.http.post<Producto>(this.base, payload, {
           headers: this.getAuthHeaders(),
         }),
       );
-      this.productos.update(p => [...p, result]);
-      return result;
+      const enriched = {
+        ...result,
+        imagen_url: this.cleanUrl(result.imagen_url),
+        categoria: result.categoria || this.categoryService.categorias().find(c => c.id === result.categoria_id),
+      };
+      this.productos.update(p => [...p, enriched]);
+      return enriched;
     } catch (err) {
       const message = 'Error al crear producto';
       this.error.set(message);
@@ -66,14 +88,23 @@ export class ProductService {
   }
 
   async update(id: number, producto: Partial<Producto>): Promise<Producto> {
+    const payload = {
+      ...producto,
+      imagen_url: this.cleanUrl(producto.imagen_url),
+    };
     try {
       const result = await firstValueFrom(
-        this.http.put<Producto>(`${this.base}/${id}`, producto, {
+        this.http.put<Producto>(`${this.base}/${id}`, payload, {
           headers: this.getAuthHeaders(),
         }),
       );
-      this.productos.update(p => p.map(prod => prod.id === id ? result : prod));
-      return result;
+      const enriched = {
+        ...result,
+        imagen_url: this.cleanUrl(result.imagen_url),
+        categoria: result.categoria || this.categoryService.categorias().find(c => c.id === result.categoria_id),
+      };
+      this.productos.update(p => p.map(prod => prod.id === id ? enriched : prod));
+      return enriched;
     } catch (err) {
       const message = 'Error al actualizar producto';
       this.error.set(message);

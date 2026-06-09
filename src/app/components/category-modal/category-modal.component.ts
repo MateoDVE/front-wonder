@@ -427,6 +427,13 @@ export class CategoryModalComponent implements OnInit {
     });
   }
 
+  private cleanUrl(url: string | null | undefined): string | null {
+    if (!url) return null;
+    const lower = url.trim().toLowerCase();
+    if (lower === 'null' || lower === 'undefined' || lower === '') return null;
+    return url;
+  }
+
   open(category?: Categoria): void {
     this.error.set(null);
     this.uploadError.set(null);
@@ -434,12 +441,13 @@ export class CategoryModalComponent implements OnInit {
     
     if (category) {
       this.editingCategory.set(category);
-      this.imagePreview.set(category.imagen_url || null);
+      const sanitizedUrl = this.cleanUrl(category.imagen_url);
+      this.imagePreview.set(sanitizedUrl);
       this.form.patchValue({
         nombre: category.nombre,
         descripcion: category.descripcion,
         activa: category.activa,
-        imagen_url: category.imagen_url || '',
+        imagen_url: sanitizedUrl || '',
       });
     } else {
       this.editingCategory.set(null);
@@ -505,10 +513,17 @@ export class CategoryModalComponent implements OnInit {
       const formValue = this.form.value;
       const editing = this.editingCategory();
 
+      const payload: any = {
+        nombre: formValue.nombre,
+        descripcion: formValue.descripcion || undefined,
+        activa: formValue.activa,
+        imagen_url: this.cleanUrl(formValue.imagen_url) || undefined,
+      };
+
       if (editing) {
-        await this.categoryService.update(editing.id, formValue);
+        await this.categoryService.update(editing.id, payload);
       } else {
-        await this.categoryService.create(formValue);
+        await this.categoryService.create(payload);
       }
 
       this.closeModal();
