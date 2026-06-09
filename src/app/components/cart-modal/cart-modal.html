@@ -64,7 +64,16 @@
 
                 <div class="cart-item__qty" [attr.aria-label]="'Cantidad de ' + item.nombre">
                   <button class="cart-item__qty-btn" (click)="onUpdateQuantity(item.id, item.cantidad - 1)" [disabled]="cart.loading()" aria-label="Disminuir" type="button">−</button>
-                  <span class="cart-item__qty-value" aria-live="polite">{{ item.cantidad }}</span>
+                  <input
+                    class="cart-item__qty-input"
+                    type="number"
+                    [value]="item.cantidad"
+                    (input)="onInputChange(item.id, $event)"
+                    (blur)="onInputBlur(item.id, $event, item.cantidad)"
+                    min="1"
+                    [disabled]="cart.loading()"
+                    aria-label="Cantidad"
+                  />
                   <button class="cart-item__qty-btn" (click)="onUpdateQuantity(item.id, item.cantidad + 1)" [disabled]="cart.loading()" aria-label="Aumentar" type="button">+</button>
                 </div>
               </div>

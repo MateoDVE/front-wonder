@@ -380,12 +380,24 @@
     }
   }
 
-  &__qty-value {
-    min-width: 20px;
+  &__qty-input {
+    width: 36px;
+    height: 26px;
     text-align: center;
     font-size: 13px;
     font-weight: 700;
     color: var(--clr-text-1);
+    background: transparent;
+    border: none;
+    outline: none;
+    -moz-appearance: textfield;
+    appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
   &__delete {
