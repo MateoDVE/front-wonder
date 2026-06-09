@@ -105,6 +105,14 @@
 .admin-stats-mini {
   display: grid;
   gap: 12px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .admin-stats-mini__card {
@@ -555,6 +563,14 @@
   gap: 8px;
   border-bottom: 1px solid var(--clr-border);
   padding-bottom: 16px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .admin-nav__item {
