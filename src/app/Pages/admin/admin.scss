@@ -549,3 +549,51 @@
     }
   }
 }
+
+.admin-nav {
+  display: grid;
+  gap: 8px;
+  border-bottom: 1px solid var(--clr-border);
+  padding-bottom: 16px;
+}
+
+.admin-nav__item {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--clr-text-2);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s var(--ease);
+
+  svg {
+    color: var(--clr-text-3);
+    transition: color 0.2s var(--ease);
+  }
+
+  &:hover {
+    background: var(--clr-surface-2);
+    color: var(--clr-text-1);
+    svg {
+      color: var(--clr-primary);
+    }
+  }
+
+  &.is-active {
+    background: var(--clr-accent);
+    color: var(--clr-primary-dark);
+    svg {
+      color: var(--clr-primary);
+    }
+    :root.dark & {
+      color: var(--clr-primary-light);
+    }
+  }
+}
