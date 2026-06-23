@@ -2,32 +2,37 @@ import { Component, OnInit, computed, inject, signal, ViewChild } from '@angular
 import { CurrencyPipe } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
+import { CarruselService } from '../../services/carrusel.service';
 import { ProductModalComponent } from '../../components/product-modal/product-modal.component';
 import { CategoryModalComponent } from '../../components/category-modal/category-modal.component';
-import { Producto, Categoria } from '../../types/database.types';
+import { CarruselModalComponent } from '../../components/carrusel-modal/carrusel-modal.component';
+import { Producto, Categoria, CarruselImagen } from '../../types/database.types';
 
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [CurrencyPipe, ProductModalComponent, CategoryModalComponent],
+  imports: [CurrencyPipe, ProductModalComponent, CategoryModalComponent, CarruselModalComponent],
   templateUrl: './admin.html',
   styleUrl: './admin.scss',
 })
 export class AdminPage implements OnInit {
   @ViewChild(ProductModalComponent) productModal!: ProductModalComponent;
   @ViewChild(CategoryModalComponent) categoryModal!: CategoryModalComponent;
+  @ViewChild(CarruselModalComponent) carruselModal!: CarruselModalComponent;
 
   private readonly productService = inject(ProductService);
   private readonly categoryService = inject(CategoryService);
+  private readonly carruselService = inject(CarruselService);
 
   readonly searchTerm = signal('');
   readonly selectedState = signal<'all' | 'active' | 'inactive' | 'lowStock'>('all');
-  readonly activeTab = signal<'products' | 'categories'>('products');
+  readonly activeTab = signal<'products' | 'categories' | 'carrusel'>('products');
 
   readonly productos = this.productService.productos;
   readonly categorias = this.categoryService.categorias;
-  readonly loading = computed(() => this.productService.loading() || this.categoryService.loading());
-  readonly error = computed(() => this.productService.error() || this.categoryService.error());
+  readonly carruselImagenes = this.carruselService.carruselImagenes;
+  readonly loading = computed(() => this.productService.loading() || this.categoryService.loading() || this.carruselService.loading());
+  readonly error = computed(() => this.productService.error() || this.categoryService.error() || this.carruselService.error());
 
   readonly filteredProducts = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
@@ -77,6 +82,7 @@ export class AdminPage implements OnInit {
   ngOnInit(): void {
     void this.productService.loadAll({ onlyActive: false });
     void this.categoryService.loadAll({ onlyActive: false });
+    void this.carruselService.loadAll({ onlyActive: false });
   }
 
   onSearch(event: Event): void {
@@ -137,7 +143,26 @@ export class AdminPage implements OnInit {
     }
   }
 
-  setTab(tab: 'products' | 'categories'): void {
+  // Carrusel CRUD handlers
+  openCreateCarruselModal(): void {
+    this.carruselModal.open();
+  }
+
+  editCarrusel(slide: CarruselImagen): void {
+    this.carruselModal.open(slide);
+  }
+
+  async deleteCarrusel(slide: CarruselImagen): Promise<void> {
+    if (!confirm(`¿Estás seguro de que deseas eliminar esta diapositiva?`)) return;
+    
+    try {
+      await this.carruselService.delete(slide.id);
+    } catch (err: any) {
+      alert(err?.error?.message || 'Error al eliminar la diapositiva');
+    }
+  }
+
+  setTab(tab: 'products' | 'categories' | 'carrusel'): void {
     this.activeTab.set(tab);
   }
 }
