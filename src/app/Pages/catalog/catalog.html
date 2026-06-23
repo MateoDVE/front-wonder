@@ -1,17 +1,8 @@
 <section class="catalog">
   <div class="catalog__container">
 
-    <!-- Hero Banner -->
-    <div class="catalog__hero">
-      <div class="catalog__hero-content">
-        <span class="catalog__hero-tag">Selección Premium</span>
-        <h1 class="catalog__hero-title">Licorería Wonder</h1>
-        <p class="catalog__hero-subtitle">Descubre licores excepcionales, marcas exclusivas y bebidas selectas curadas para ti.</p>
-      </div>
-    </div>
-
     <!-- Toolbar -->
-    <div class="catalog__toolbar">
+    <div id="catalog-products" class="catalog__toolbar">
       <label class="catalog__search" for="search-input">
         <svg class="catalog__search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -66,6 +57,28 @@
             >Precio: Mayor a Menor</button>
           </div>
         </div>
+
+        @if (marcas().length > 0) {
+          <div class="catalog__filter-group" style="margin-top: 8px;">
+            <span class="catalog__filter-label">Filtrar por Marca:</span>
+            <div class="catalog__filter-actions">
+              <button 
+                class="catalog__filter-opt" 
+                [class.catalog__filter-opt--active]="activeBrand() === ''"
+                (click)="onBrandToggle('')"
+                type="button"
+              >Todas</button>
+              @for (brand of marcas(); track brand) {
+                <button 
+                  class="catalog__filter-opt" 
+                  [class.catalog__filter-opt--active]="activeBrand() === brand"
+                  (click)="onBrandToggle(brand)"
+                  type="button"
+                >{{ brand }}</button>
+              }
+            </div>
+          </div>
+        }
       </div>
     }
 
@@ -113,14 +126,54 @@
 
     <!-- Products grid -->
     @if (!loading() && !error()) {
-      @if (filteredProducts().length > 0) {
+      @if (paginatedProducts().length > 0) {
         <div class="catalog__grid" role="list" aria-label="Productos">
-          @for (product of filteredProducts(); track product.id) {
+          @for (product of paginatedProducts(); track product.id) {
             <div role="listitem">
-              <app-product-card [product]="product" (addToCart)="onAddToCart($event)" />
+              <app-product-card 
+                [product]="product" 
+                (addToCart)="onAddToCart($event)" 
+                (viewDetail)="onViewDetail($event)"
+              />
             </div>
           }
         </div>
+
+        <!-- Pagination Controls -->
+        @if (totalPages() > 1) {
+          <div class="catalog__pagination">
+            <button 
+              type="button" 
+              class="catalog__pagination-btn catalog__pagination-btn--arrow" 
+              [disabled]="currentPage() === 1" 
+              (click)="goToPage(currentPage() - 1)"
+              aria-label="Página anterior"
+            >
+              &laquo;
+            </button>
+
+            @for (page of getPageNumbers(); track page) {
+              <button 
+                type="button" 
+                class="catalog__pagination-btn" 
+                [class.catalog__pagination-btn--active]="page === currentPage()" 
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+            }
+
+            <button 
+              type="button" 
+              class="catalog__pagination-btn catalog__pagination-btn--arrow" 
+              [disabled]="currentPage() === totalPages()" 
+              (click)="goToPage(currentPage() + 1)"
+              aria-label="Página siguiente"
+            >
+              &raquo;
+            </button>
+          </div>
+        }
       } @else if (productos().length > 0) {
         <div class="catalog__empty">
           <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -128,7 +181,7 @@
             <line x1="8" y1="11" x2="14" y2="11"/>
           </svg>
           <p>No se encontraron productos para <strong>"{{ searchTerm() }}"</strong></p>
-          <button class="catalog__empty-reset" (click)="searchTerm.set(''); activeCategory.set('')" type="button">
+          <button class="catalog__empty-reset" (click)="searchTerm.set(''); activeCategory.set(''); activeBrand.set('')" type="button">
             Limpiar búsqueda
           </button>
         </div>
@@ -145,3 +198,7 @@
 
   </div>
 </section>
+
+@if (selectedProduct(); as activeProd) {
+  <app-product-detail-modal [product]="activeProd" (close)="selectedProduct.set(null)" />
+}
