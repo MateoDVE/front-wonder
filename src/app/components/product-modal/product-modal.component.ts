@@ -131,6 +131,36 @@ import { Producto } from '../../types/database.types';
 
           <div class="form-row">
             <div class="form-group">
+              <label>Volumen (ml)</label>
+              <input 
+                type="number" 
+                formControlName="volumen_ml" 
+                placeholder="Ej. 750"
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Graduación Alcohólica (%)</label>
+              <input 
+                type="number" 
+                formControlName="gradacion_alcoholica" 
+                placeholder="Ej. 40"
+                step="0.1"
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Bebida</label>
+            <input 
+              type="text" 
+              formControlName="tipo_bebida" 
+              placeholder="Ej. Whisky, Licor, Cerveza"
+            >
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
               <label>
                 <input type="checkbox" formControlName="activo">
                 Activo
@@ -515,6 +545,9 @@ export class ProductModalComponent implements OnInit {
       activo: [true],
       destacado: [false],
       imagen_url: [''],
+      volumen_ml: [null],
+      gradacion_alcoholica: [null],
+      tipo_bebida: [''],
     });
   }
 
@@ -544,6 +577,9 @@ export class ProductModalComponent implements OnInit {
         activo: product.activo,
         destacado: product.destacado,
         imagen_url: sanitizedUrl || '',
+        volumen_ml: product.volumen_ml,
+        gradacion_alcoholica: product.gradacion_alcoholica,
+        tipo_bebida: product.tipo_bebida || '',
       });
     } else {
       this.editingProduct.set(null);
@@ -619,6 +655,9 @@ export class ProductModalComponent implements OnInit {
         activo: formValue.activo,
         destacado: formValue.destacado,
         imagen_url: formValue.imagen_url || undefined,
+        volumen_ml: formValue.volumen_ml !== null && formValue.volumen_ml !== '' ? Number(formValue.volumen_ml) : undefined,
+        gradacion_alcoholica: formValue.gradacion_alcoholica !== null && formValue.gradacion_alcoholica !== '' ? Number(formValue.gradacion_alcoholica) : undefined,
+        tipo_bebida: formValue.tipo_bebida || undefined,
       };
 
       if (editing) {
