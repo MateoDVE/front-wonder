@@ -1,0 +1,148 @@
+<div class="detail-modal-overlay" (click)="onOverlayClick($event)">
+  <div class="detail-modal-content">
+    <button class="detail-modal-close" (click)="onClose()" type="button" aria-label="Cerrar modal">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    <div class="detail-modal-body">
+      <!-- Columna 1: Imagen del Producto -->
+      <div class="detail-modal-media">
+        <div class="detail-modal-img-wrap">
+          @if (!imgError && cleanedImageUrl) {
+            <img
+              class="detail-modal-img"
+              [src]="cleanedImageUrl"
+              [alt]="product.nombre"
+              (error)="onImgError()"
+            />
+          } @else {
+            <div class="detail-modal-img-fallback" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>
+              </svg>
+              <span>{{ product.nombre }}</span>
+            </div>
+          }
+          <div class="detail-modal-badges">
+            <span class="detail-modal-badge detail-modal-badge--category">{{ categoryLabel }}</span>
+            @if (product.destacado) {
+              <span class="detail-modal-badge detail-modal-badge--featured">
+                <i class="bi bi-star-fill"></i> Destacado
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna 2: Detalles del Producto -->
+      <div class="detail-modal-info">
+        <div class="detail-modal-header-info">
+          @if (product.marca) {
+            <span class="detail-modal-brand">{{ product.marca }}</span>
+          }
+          <h2 class="detail-modal-title">{{ product.nombre }}</h2>
+          <span class="detail-modal-price">{{ product.precio_venta | currency:undefined:'Bs. ' }}</span>
+        </div>
+
+        <hr class="detail-modal-divider" />
+
+        <!-- Especificaciones técnicas -->
+        <div class="detail-modal-specs">
+          @if (product.marca) {
+            <div class="detail-modal-spec-item">
+              <span class="detail-modal-spec-label">Marca</span>
+              <span class="detail-modal-spec-value">{{ product.marca }}</span>
+            </div>
+          }
+          @if (product.tipo_bebida) {
+            <div class="detail-modal-spec-item">
+              <span class="detail-modal-spec-label">Tipo</span>
+              <span class="detail-modal-spec-value">{{ product.tipo_bebida }}</span>
+            </div>
+          }
+          @if (product.volumen_ml) {
+            <div class="detail-modal-spec-item">
+              <span class="detail-modal-spec-label">Volumen</span>
+              <span class="detail-modal-spec-value">{{ product.volumen_ml }} ml</span>
+            </div>
+          }
+          @if (product.gradacion_alcoholica) {
+            <div class="detail-modal-spec-item">
+              <span class="detail-modal-spec-label">Graduación</span>
+              <span class="detail-modal-spec-value">{{ product.gradacion_alcoholica }}% Vol.</span>
+            </div>
+          }
+          @if (product.pais_origen) {
+            <div class="detail-modal-spec-item">
+              <span class="detail-modal-spec-label">Origen</span>
+              <span class="detail-modal-spec-value">
+                <i class="bi bi-geo-alt-fill"></i> {{ product.pais_origen }}
+              </span>
+            </div>
+          }
+        </div>
+
+        @if (product.descripcion) {
+          <div class="detail-modal-description">
+            <h3 class="detail-modal-section-title">Descripción</h3>
+            <p>{{ product.descripcion }}</p>
+          </div>
+        }
+
+        <div class="detail-modal-stock-status" [class.detail-modal-stock-status--out]="!inStock">
+          @if (inStock) {
+            <span class="detail-modal-stock-dot"></span>
+            <span>Disponible ({{ product.stock }} unidades)</span>
+          } @else {
+            <span class="detail-modal-stock-dot"></span>
+            <span>Agotado temporalmente</span>
+          }
+        </div>
+
+        <!-- Acciones del Carrito -->
+        <div class="detail-modal-actions">
+          @if (inStock) {
+            <div class="detail-modal-qty">
+              <button 
+                class="detail-modal-qty-btn" 
+                (click)="decrement()" 
+                [disabled]="cantidad() <= 1"
+                type="button"
+                aria-label="Disminuir cantidad"
+              >
+                <i class="bi bi-dash"></i>
+              </button>
+              <span class="detail-modal-qty-value">{{ cantidad() }}</span>
+              <button 
+                class="detail-modal-qty-btn" 
+                (click)="increment()" 
+                [disabled]="cantidad() >= product.stock"
+                type="button"
+                aria-label="Aumentar cantidad"
+              >
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          }
+
+          <button
+            class="detail-modal-add-btn"
+            (click)="onAddToCart()"
+            [disabled]="!inStock || addingToCart()"
+            type="button"
+          >
+            @if (addingToCart()) {
+              <span class="detail-modal-spinner"></span>
+              <span>Agregando...</span>
+            } @else if (inStock) {
+              <i class="bi bi-cart-plus"></i>
+              <span>Agregar • {{ subtotal() | currency:undefined:'Bs. ' }}</span>
+            } @else {
+              <span>Agotado</span>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
