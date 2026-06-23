@@ -4,6 +4,10 @@ import { adminGuard } from './guards/admin.guard';
 export const routes: Routes = [
   {
     path: '',
+    loadComponent: () => import('./Pages/home/home').then(m => m.HomePage),
+  },
+  {
+    path: 'catalog',
     loadComponent: () => import('./Pages/catalog/catalog').then(m => m.CatalogPage),
   },
   {

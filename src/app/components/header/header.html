@@ -7,7 +7,8 @@
         <span class="header__logo-text">Wonder</span>
       </a>
       <nav class="header__nav" aria-label="Navegación principal">
-        <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">Catálogo</a>
+        <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        <a class="header__nav-link" routerLink="/catalog" routerLinkActive="header__nav-link--active">Catálogo</a>
         @if (isAdmin()) {
           <a class="header__nav-link" routerLink="/admin" routerLinkActive="header__nav-link--active">Admin</a>
         }
@@ -113,6 +114,9 @@
     <div class="header__drawer-body">
       <nav class="header__drawer-nav">
         <a class="header__drawer-link" routerLink="/" routerLinkActive="header__drawer-link--active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+          <i class="bi bi-house"></i> Inicio
+        </a>
+        <a class="header__drawer-link" routerLink="/catalog" routerLinkActive="header__drawer-link--active" (click)="closeMobileMenu()">
           <i class="bi bi-grid"></i> Catálogo
         </a>
         @if (isAdmin()) {
