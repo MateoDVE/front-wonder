@@ -89,14 +89,14 @@ export class CartService {
     }
   }
 
-  async addItem(producto: Producto): Promise<void> {
+  async addItem(producto: Producto, cantidad: number = 1): Promise<void> {
     const userId = this.userService.userId();
     if (!userId) return;
 
     // Direct PUT optimization: if item exists with valid database ID, update quantity directly
     const existing = this.items().find(i => i.producto_id === producto.id);
     if (existing && existing.id > 0) {
-      return this.updateQuantity(existing.id, existing.cantidad + 1);
+      return this.updateQuantity(existing.id, existing.cantidad + cantidad);
     }
 
     this.saveStableState();
@@ -109,7 +109,7 @@ export class CartService {
     if (existingTempIndex > -1) {
       oldItems[existingTempIndex] = {
         ...oldItems[existingTempIndex],
-        cantidad: oldItems[existingTempIndex].cantidad + 1,
+        cantidad: oldItems[existingTempIndex].cantidad + cantidad,
       };
       this.items.set(oldItems);
     } else {
@@ -120,7 +120,7 @@ export class CartService {
         nombre: producto.nombre,
         precio: producto.precio_venta,
         imagen: producto.imagen_url || null,
-        cantidad: 1,
+        cantidad: cantidad,
       };
       this.items.set([...oldItems, tempItem]);
     }
@@ -132,7 +132,7 @@ export class CartService {
     try {
       const dto: AgregarItemCarritoDto = {
         producto_id: producto.id,
-        cantidad: 1,
+        cantidad: cantidad,
         precio_unitario: producto.precio_venta,
       };
 

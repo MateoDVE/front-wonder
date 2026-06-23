@@ -11,6 +11,7 @@ import { Producto } from '../../types/database.types';
 export class ProductCardComponent {
   @Input({ required: true }) product!: Producto;
   @Output() addToCart = new EventEmitter<Producto>();
+  @Output() viewDetail = new EventEmitter<Producto>();
 
   imgError = false;
 
@@ -36,5 +37,14 @@ export class ProductCardComponent {
 
   onAddToCart(): void {
     this.addToCart.emit(this.product);
+  }
+
+  onCardClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    // Do not trigger detail view if clicked inside the add to cart button
+    if (target.closest('.product-card__add-btn')) {
+      return;
+    }
+    this.viewDetail.emit(this.product);
   }
 }

@@ -1,4 +1,4 @@
-<article class="product-card">
+<article class="product-card" (click)="onCardClick($event)">
   <div class="product-card__img-wrap">
     @if (!imgError && cleanedImageUrl) {
       <img
