@@ -189,18 +189,46 @@ export class CatalogPage implements OnInit {
     this.selectedProduct.set(producto);
   }
 
-  getPageNumbers(): number[] {
+  readonly visiblePages = computed<(number | string)[]>(() => {
+    const current = this.currentPage();
     const total = this.totalPages();
-    const numbers: number[] = [];
-    for (let i = 1; i <= total; i++) {
-      numbers.push(i);
-    }
-    return numbers;
-  }
+    const maxVisible = 7;
 
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages()) {
-      this.currentPage.set(page);
+    if (total <= maxVisible) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const pages: (number | string)[] = [];
+
+    if (current <= 4) {
+      for (let i = 1; i <= 5; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(total);
+    } else if (current >= total - 3) {
+      pages.push(1);
+      pages.push('...');
+      for (let i = total - 4; i <= total; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      pages.push('...');
+      pages.push(current - 1);
+      pages.push(current);
+      pages.push(current + 1);
+      pages.push('...');
+      pages.push(total);
+    }
+
+    return pages;
+  });
+
+  goToPage(page: number | string): void {
+    const num = typeof page === 'string' ? Number(page) : page;
+    if (!isNaN(num) && num >= 1 && num <= this.totalPages()) {
+      this.currentPage.set(num);
       this.scrollToProducts();
     }
   }
