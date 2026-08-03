@@ -152,15 +152,19 @@
               &laquo;
             </button>
 
-            @for (page of getPageNumbers(); track page) {
-              <button 
-                type="button" 
-                class="catalog__pagination-btn" 
-                [class.catalog__pagination-btn--active]="page === currentPage()" 
-                (click)="goToPage(page)"
-              >
-                {{ page }}
-              </button>
+            @for (page of visiblePages(); track $index) {
+              @if (page === '...') {
+                <span class="catalog__pagination-ellipsis">&hellip;</span>
+              } @else {
+                <button 
+                  type="button" 
+                  class="catalog__pagination-btn" 
+                  [class.catalog__pagination-btn--active]="page === currentPage()" 
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              }
             }
 
             <button 

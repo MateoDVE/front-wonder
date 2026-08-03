@@ -267,3 +267,28 @@
     }
   }
 }
+
+.destacados-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  background: var(--btn-gradient);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s var(--ease);
+  margin-top: 8px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+}
