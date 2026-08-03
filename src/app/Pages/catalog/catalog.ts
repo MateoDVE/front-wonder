@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal, effect, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { combineLatest } from 'rxjs';
 import { CartService } from '../../services/cart.service';
 import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
@@ -67,9 +68,9 @@ export class CatalogPage implements OnInit {
   });
 
   constructor() {
-    this.route.queryParams.subscribe(params => {
-      const category = params['category'];
-      const productId = Number(params['product']);
+    combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, queryParams]) => {
+      const category = params['category'] || queryParams['category'];
+      const productId = Number(queryParams['product']);
 
       this.currentPage.set(1); // Reset page on category link change
 
@@ -117,12 +118,20 @@ export class CatalogPage implements OnInit {
     // 1. Filter by category
     const cat = this.activeCategory();
     if (cat) {
-      const categoryObj = this.categorias().find(c => c.nombre === cat);
+      const categoryObj = this.categorias().find(
+        c => c.nombre.trim().toLowerCase() === cat.trim().toLowerCase()
+      );
       const catId = categoryObj?.id;
       if (catId) {
-        list = list.filter(p => p.categoria_id === catId || p.categoria?.nombre === cat);
+        list = list.filter(
+          p =>
+            p.categoria_id === catId ||
+            p.categoria?.nombre?.trim().toLowerCase() === cat.trim().toLowerCase()
+        );
       } else {
-        list = list.filter(p => p.categoria?.nombre === cat);
+        list = list.filter(
+          p => p.categoria?.nombre?.trim().toLowerCase() === cat.trim().toLowerCase()
+        );
       }
     }
 

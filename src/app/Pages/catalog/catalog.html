@@ -94,7 +94,7 @@
         @for (cat of categoriasNames(); track cat) {
           <button
             class="catalog__cat-chip"
-            [class.catalog__cat-chip--active]="activeCategory() === cat"
+            [class.catalog__cat-chip--active]="activeCategory().toLowerCase() === cat.toLowerCase()"
             (click)="onCategoryToggle(cat)"
             type="button"
           >{{ cat }}</button>
