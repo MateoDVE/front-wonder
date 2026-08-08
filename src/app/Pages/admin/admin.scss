@@ -3,10 +3,10 @@
   margin-inline: auto;
   padding: 32px 24px;
   display: grid;
-  grid-template-columns: 310px minmax(0, 1fr);
+  grid-template-columns: 280px minmax(0, 1fr);
   gap: 32px;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     grid-template-columns: 1fr;
     gap: 24px;
   }
@@ -33,10 +33,24 @@
   display: grid;
   gap: 24px;
   height: fit-content;
+  max-height: calc(100vh - var(--header-h) - 48px);
+  overflow-y: auto;
 
-  @media (max-width: 1100px) {
+  /* Custom scrollbar for sidebar */
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--clr-border);
+    border-radius: var(--radius-pill);
+  }
+
+  @media (max-width: 1200px) {
     position: static;
     padding: 20px;
+    max-height: none;
+    overflow-y: visible;
   }
 }
 
@@ -106,7 +120,7 @@
   display: grid;
   gap: 12px;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -244,12 +258,8 @@
 
 .admin-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
 }
 
 .summary-card {
@@ -564,7 +574,7 @@
   border-bottom: 1px solid var(--clr-border);
   padding-bottom: 16px;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
