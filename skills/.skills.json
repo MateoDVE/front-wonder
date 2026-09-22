@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "alirezarezvani-ui-design-system": {
+      "version": "1.0.1",
+      "installedAt": "2026-09-21T19:34:58.508Z",
+      "platform": "junie"
+    },
+    "anthropic-frontend-design": {
+      "version": "1.0.2",
+      "installedAt": "2026-09-21T19:35:30.168Z",
+      "platform": "junie"
+    }
+  }
+}

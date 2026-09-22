@@ -257,6 +257,19 @@
     animation: badgeBounce 0.3s var(--ease-bounce);
   }
 
+  &__login-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    line-height: 1.25;
+
+    small {
+      font-size: 10px;
+      font-weight: 500;
+    }
+  }
+
   &__login-btn {
     display: flex;
     align-items: center;

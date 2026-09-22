@@ -42,6 +42,10 @@ export class HomePage implements OnInit {
     this.productService.loadAll();
   }
 
+  reloadProducts(): void {
+    void this.productService.loadAll();
+  }
+
   async onAddToCart(producto: Producto): Promise<void> {
     this.addingToCart.set(true);
     try {
@@ -61,7 +65,8 @@ export class HomePage implements OnInit {
     if (this.featuredContainer) {
       const container = this.featuredContainer.nativeElement;
       const scrollAmount = container.clientWidth * 0.8 * direction;
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      container.scrollBy({ left: scrollAmount, behavior: reducedMotion ? 'instant' : 'smooth' });
     }
   }
 }

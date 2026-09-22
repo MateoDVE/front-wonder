@@ -35,7 +35,7 @@ export class CarruselComponent implements OnInit, OnDestroy {
   }
 
   startAutoPlay(): void {
-    if (!this.isBrowser) return;
+    if (!this.isBrowser || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.stopAutoPlay();
     this.timerId = setInterval(() => {
       this.nextSlide();

@@ -11,21 +11,16 @@ import { UserService } from '../../services/user.service';
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   template: `
   <div class="modal-backdrop" (click)="onBackdropClick($event)">
-    <section class="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <section class="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title" aria-describedby="login-description">
       <button class="login-modal__close" type="button" (click)="close()" aria-label="Cerrar modal">
         <span aria-hidden="true">×</span>
       </button>
 
       <div class="login-modal__brand">
         <div class="login-modal__badge">Wonder</div>
-        <h3 id="login-title">Inicia sesión</h3>
-        <p>Accede a tu cuenta para comprar más rápido, revisar pedidos y guardar tus favoritos.</p>
-
-        <ul class="login-modal__benefits">
-          <li>Checkout más rápido</li>
-          <li>Historial de pedidos</li>
-          <li>Control de tu carrito</li>
-        </ul>
+        <h3 id="login-title">Acceso de administrador</h3>
+        <p id="login-description">El inicio de sesión es exclusivo para administradores de Wonder.</p>
+        <p>Ingresa con tu cuenta de administrador para acceder al panel de gestión.</p>
       </div>
 
       <div class="login-modal__content">
@@ -59,7 +54,7 @@ import { UserService } from '../../services/user.service';
 
           <div class="login-form__actions">
             <button type="submit" class="login-form__submit" [disabled]="loading">
-              {{ loading ? 'Ingresando...' : 'Entrar' }}
+              {{ loading ? 'Ingresando...' : 'Iniciar sesión' }}
             </button>
             <button type="button" class="login-form__cancel" (click)="close()">Cancelar</button>
           </div>

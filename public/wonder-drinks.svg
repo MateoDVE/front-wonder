@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 650" fill="none">
+<circle cx="346" cy="301" r="220" fill="#dce9cf"/>
+<path d="M0 509c178-60 401-58 640-6v147H0Z" fill="#a9c596"/>
+<ellipse cx="331" cy="533" rx="217" ry="27" fill="#749964" opacity=".3"/>
+<g transform="rotate(-12 273 337)">
+<path d="M224 97h78v125c0 26 54 45 54 89v209c0 18-15 30-31 30H201c-17 0-30-12-30-30V311c0-44 53-63 53-89Z" fill="#244e38"/>
+<path d="M236 148h18v87c0 38-54 53-54 91v174" stroke="#50775a" stroke-width="10" stroke-linecap="round"/>
+<rect x="219" y="90" width="88" height="53" rx="7" fill="#163929"/>
+<path d="M230 103h65M230 114h65M230 125h65" stroke="#668065" stroke-width="2"/>
+<path d="M171 330h185v147H171z" fill="#f1efce"/>
+<path d="M185 343h157v120H185z" stroke="#496445"/>
+<text x="263" y="401" text-anchor="middle" font-family="Georgia,serif" font-size="39" font-weight="bold" fill="#21432f">Wonder</text>
+<path d="M234 423h58" stroke="#739055"/>
+<text x="263" y="447" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#496445">El buen gusto.</text>
+</g>
+<path d="m374 336 17 187c2 18 19 29 64 29s63-11 65-29l17-187Z" fill="#e7edcf" fill-opacity=".65" stroke="#f7fae9" stroke-width="3"/>
+<path d="m382 385 13 129c1 14 17 24 60 24s58-10 60-24l13-129Z" fill="#ce7838"/>
+<ellipse cx="455" cy="385" rx="73" ry="14" fill="#e9a353"/>
+<rect x="401" y="392" width="44" height="45" rx="8" transform="rotate(-12 401 392)" fill="#f7eccc" fill-opacity=".65" stroke="#f7edcc"/>
+<rect x="463" y="410" width="42" height="45" rx="8" transform="rotate(13 463 410)" fill="#f7eccc" fill-opacity=".6" stroke="#f7edcc"/>
+<path d="m407 465 3 48M524 348l-15 159" stroke="#fff8df" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+<path d="m458 414 66-184" stroke="#244e38" stroke-width="8" stroke-linecap="round"/>
+<circle cx="522" cy="326" r="54" fill="#e9a243" stroke="#f9d591" stroke-width="7"/>
+<circle cx="522" cy="326" r="42" stroke="#ffe4a9" stroke-width="2"/>
+<path d="M522 284v84m-42-42h84m-72-30 60 60m0-60-60 60" stroke="#ffe4a9" stroke-width="3"/>
+<path d="M116 489c23-51 69-33 79-4-23 24-58 35-79 4Z" fill="#497232"/>
+<path d="m119 490 66-8" stroke="#9ab979" stroke-width="2"/>
+<path d="m458 132 6 19 20 5-20 6-6 19-6-19-20-6 20-5Z" fill="#537448"/>
+</svg>

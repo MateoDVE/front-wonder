@@ -11,7 +11,7 @@
   --clr-accent-hover:  rgba(55, 198, 9, 0.22);
   
   // Light Theme Neutrals
-  --clr-bg:            #f8fafc; // Soft slate white
+  --clr-bg:            #fafbf8;
   --clr-surface:       #ffffff; // Pure white
   --clr-surface-2:     #f1f5f9; // Slate 100 for side areas
   --clr-border:        #e2e8f0; // Slate 200
@@ -133,6 +133,21 @@ button {
 img {
   display: block;
   max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid #458530;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom Scrollbars */
